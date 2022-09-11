@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Spartan:wght@700&display=swap");
 body {
   font-family: "Spartan", sans-serif;
-  color: #808080;
   text-align: center;
 }
 
@@ -20,8 +19,73 @@ body {
 .navbar__title {
   text-align: start;
 }
+
+/* cart style */
 .navbar__cart {
+  position: relative;
   text-align: end;
+  background: right / contain no-repeat url("../img/shopping-cart.png");
+  padding: 10px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+.navbar__cart span {
+  position: relative;
+  top: -20px;
+  right: -14px;
+  background: none;
+  color: black;
+  font-size: 12px;
+}
+
+.cart__wrapper {
+  position: absolute;
+  top: 56px;
+  right: 35px;
+  display: none;
+  height: 20px;
+  width: 100px;
+  background-color: #fff;
+  z-index: 999;
+  width: 300px;
+  height: 300px;
+}
+.navbar__cart:hover .cart__wrapper {
+  display: block;
+}
+.cart__detail {
+  display: flex;
+  flex-direction: column;
+}
+.cart__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+}
+.cart__header h3 {
+  margin: 8px;
+}
+.cart__header button {
+  width: 100px;
+  margin: auto 20px;
+  padding: 5px;
+  background: transparent;
+  border: 1px solid #000;
+}
+.cart__items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.cart__items--img img {
+  width: 60px;
+}
+
+.cart__quantity {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 /* cards style */
@@ -49,7 +113,7 @@ main {
   position: relative;
   top: 20%;
   left: 85%;
-  z-index: 999;
+  z-index: 99;
   background-color: #000;
   width: 75px;
   color: #fff;
@@ -88,6 +152,8 @@ main {
   border: 1px solid #000;
   font-weight: bolder;
 }
+
+/* responsive quires */
 
 @media only screen and (max-width: 1000px) {
   .card {

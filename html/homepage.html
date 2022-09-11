@@ -9,7 +9,18 @@
   <body>
     <nav class="navbar">
       <div class="navbar__title"><span>SHOP</span></div>
-      <div class="navbar__cart"><span>SHOP</span></div>
+      <div class="navbar__cart">
+        <span id="cart_counter"></span>
+        <div class="cart__wrapper">
+          <div class="cart__detail">
+            <div class="cart__header">
+              <h3>ITEMS</h3>
+              <button>CLEAR</button>
+            </div>
+            <div id="cart__list"></div>
+          </div>
+        </div>
+      </div>
     </nav>
     <main>
       <section id="item_cards" class="cards"></section>
