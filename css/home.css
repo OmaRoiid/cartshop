@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Spartan:wght@700&display=swap");
+body {
+  font-family: "Spartan", sans-serif;
+  color: #808080;
+  text-align: center;
+}
+
+/* navbar style */
+.navbar {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 8px !important;
+  border-bottom: 1px solid #000;
+}
+.navbar__title,
+.navbar__cart {
+  width: 50%;
+}
+.navbar__title {
+  text-align: start;
+}
+.navbar__cart {
+  text-align: end;
+}
+
+/* cards style */
+
+main {
+  display: grid;
+  grid-template-columns: 1fr repeat(12, minmax(auto, 60px)) 1fr;
+  grid-gap: 40px;
+  padding: 60px 0;
+}
+.cards {
+  grid-column: 2 / span 12;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(auto, 60px));
+  grid-gap: 40px;
+}
+
+.card {
+  grid-column-end: span 4;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+.card__price {
+  position: relative;
+  top: 20%;
+  left: 85%;
+  z-index: 999;
+  background-color: #000;
+  width: 75px;
+  color: #fff;
+  padding: 8px;
+}
+.card__price span {
+  font-size: 14px;
+}
+
+.card__image-container {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  overflow: hidden;
+  position: relative;
+}
+
+.card__content {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #000;
+}
+
+.card__title {
+  width: 70%;
+  font-size: 14px;
+}
+
+.card__action {
+  margin: auto 10px;
+  text-align: center;
+}
+.card__action button {
+  background: transparent;
+  padding: 5px 20px;
+  border: 1px solid #000;
+  font-weight: bolder;
+}
+
+@media only screen and (max-width: 1000px) {
+  .card {
+    grid-column-end: span 6;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  main {
+    grid-gap: 20px;
+  }
+  .card {
+    grid-column-end: span 12;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  main {
+    grid-template-columns: 10px repeat(6, 1fr) 10px;
+    grid-gap: 10px;
+  }
+  .cards {
+    grid-column: 2 / span 6;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 20px;
+  }
+  .card {
+    grid-column-end: span 6;
+  }
+}
