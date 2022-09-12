@@ -100,7 +100,7 @@ function incrementQuantity(id, index) {
   document.getElementById("cart_counter").innerHTML = ++cartCounter;
   productFrequency[id]++;
   let selectedItemToIncrement = getSelectedObject(id);
-  finalPrice += selectedItemToIncrement.price;
+  finalPrice += +selectedItemToIncrement.price;
   document.getElementsByClassName("value")[index].innerHTML = ` ${
     productFrequency[selectedProductToCart[index].id]
   } `;
@@ -113,7 +113,13 @@ function decrementQuantity(id, index) {
   let selectedItemToDecrement = getSelectedObject(id);
   if (finalPrice > 0) {
     document.getElementById("cart_counter").innerHTML = --cartCounter;
-    finalPrice = finalPrice - selectedItemToDecrement.price;
+    console.log("be", finalPrice);
+    console.log(selectedItemToDecrement.price);
+
+    finalPrice =
+      Number(finalPrice).toFixed(1) -
+      Number(selectedItemToDecrement.price).toFixed(1);
+    console.log(finalPrice);
     document.getElementsByClassName("value")[index].innerHTML = ` ${
       productFrequency[selectedProductToCart[index].id]
     } `;
