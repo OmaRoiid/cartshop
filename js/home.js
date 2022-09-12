@@ -5,7 +5,6 @@ let isCartDisplay = false;
 let productFrequency = {};
 let finalPrice = 0;
 const cartList = document.getElementById("cart__list");
-const divLoaderElement = document.createElement("div");
 
 //IIFE function to run at the beginning to get the data from api  and start render of products list
 (async function getProducts() {
