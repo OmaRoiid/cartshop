@@ -1,7 +1,13 @@
 let products = [];
 let selectedProductToCart = [];
 let cartCounter = 0;
+let isCartDisplay = false;
+let productFrequency = {};
+let finalPrice = 0;
+const cartList = document.getElementById("cart__list");
+const divLoaderElement = document.createElement("div");
 
+//IIFE function to run at the beginning to get the data from api  and start render of products list
 (async function getProducts() {
   const itemCardsWrapper = document.getElementById("item_cards");
   const response = await fetch("https://fakestoreapi.com/products", {
@@ -30,10 +36,12 @@ let cartCounter = 0;
       </div>
           `;
   }
+
   itemCardsWrapper.innerHTML = content;
   document.getElementById("cart_counter").innerHTML = cartCounter;
 })();
 
+//Add the selected products from the user selection
 function onAddToCart(selectedProduct) {
   let selected = products.find((item) => item.id === selectedProduct);
   selectedProductToCart.push(selected);
@@ -41,10 +49,14 @@ function onAddToCart(selectedProduct) {
   renderCartList();
 }
 
+// render cartList inside cart view
 function renderCartList() {
-  const cartList = document.getElementById("cart__list");
   let cartListContent = "";
+  selectedProductToCart.forEach((item) => {
+    finalPrice = finalPrice + item.price;
+  });
   for (let i = 0; i < selectedProductToCart.length; i++) {
+    productFrequency[selectedProductToCart[i].id] = 1;
     cartListContent += `
       <div class="cart__items">
     <div class="cart__items--img">
@@ -52,23 +64,75 @@ function renderCartList() {
     </div>
  
     <div class="description">
-      <span>${selectedProductToCart[i].title}</span>
-      <span>${selectedProductToCart[i].price}</span>
+      <p>${selectedProductToCart[i].title}</p>
+      <p>${selectedProductToCart[i].price}</p>
     </div>
  
     <div class="cart__quantity">
-      <button class="plus-btn" type="button" name="button">
+      <button onclick="incrementQuantity(${selectedProductToCart[i].id},${i})">
         +
       </button>
-      <input type="text" name="name" value="1">
-      <button class="minus-btn" type="button" name="button">
+      <p class="value">${productFrequency[selectedProductToCart[i].id]}</p>
+      <button onclick="decrementQuantity(${selectedProductToCart[i].id},${i})">
         -
       </button>
     </div>
    </div>
           `;
   }
-  console.log(cartListContent);
-  cartList.innerHTML = cartListContent;
-  console.log(cartList);
+  cartList.innerHTML =
+    cartListContent +
+    ` <div class="cart__pay">
+  <button id="price">PAY ${finalPrice} EGP </button>
+  </div>`;
+}
+
+// Display Cart view when click on the Cart icon
+function onClickToCart() {
+  if (selectedProductToCart.length) {
+    isCartDisplay = true;
+    document.getElementsByClassName("cart__wrapper")[0].style.display = "block";
+  }
+}
+
+//increment and decrement methods
+function incrementQuantity(id, index) {
+  document.getElementById("cart_counter").innerHTML = ++cartCounter;
+  productFrequency[id]++;
+  let selectedItemToIncrement = getSelectedObject(id);
+  finalPrice += selectedItemToIncrement.price;
+  document.getElementsByClassName("value")[index].innerHTML = ` ${
+    productFrequency[selectedProductToCart[index].id]
+  } `;
+
+  document.getElementById("price").innerHTML = `PAY ${finalPrice} EGP `;
+}
+
+function decrementQuantity(id, index) {
+  productFrequency[id]--;
+  let selectedItemToDecrement = getSelectedObject(id);
+  if (finalPrice > 0) {
+    document.getElementById("cart_counter").innerHTML = --cartCounter;
+    finalPrice = finalPrice - selectedItemToDecrement.price;
+    document.getElementsByClassName("value")[index].innerHTML = ` ${
+      productFrequency[selectedProductToCart[index].id]
+    } `;
+    document.getElementById("price").innerHTML = `PAY ${finalPrice} EGP `;
+  } else {
+    selectedProductToCart = [];
+    cartList.innerHTML = `<div></div> `;
+    document.getElementsByClassName("cart__wrapper")[0].style.display = "none";
+  }
+}
+
+function clearCart() {
+  selectedProductToCart = [];
+  cartList.innerHTML = `<div></div> `;
+  document.getElementById("cart_counter").innerHTML = 0;
+  document.getElementsByClassName("cart__wrapper")[0].style.display = "none";
+}
+
+//helper Methods
+function getSelectedObject(id) {
+  return selectedProductToCart.find((item) => item.id === id);
 }
